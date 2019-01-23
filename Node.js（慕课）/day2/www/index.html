@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=in, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    index
+    <div id="msg"></div>
+    <button class="btn btn-danger" id="sendGet">发送get请求</button>
+    <button class="btn btn-danger" id="sendPost">发送post请求</button>
+
+    <button class="btn btn-danger" id="sendPostGet">发送post/get请求</button>
+
+    <!-- 下面这个进行路由传参,一般来说是post请求 -->
+    <button class="btn btn-danger" id="sendD">发送get，路由传参</button>
+
+    <button class="btn btn-danger" id="sendE">发送post，body传参</button>
+
+    <script src="components/jquery/dist/jquery.min.js"></script>
+    <script>
+        //下面是客户端的内容
+        sendE.onclick = function(){
+            $.ajax({
+                url:'/d',
+                type:'post',
+                data:{name:'tom',age:100},
+                success:function(data){
+                    if(data.success){
+                        alert(data.msg);
+                    }else{
+                        alert(data.msg);
+                    }
+                }
+            })
+        }
+
+
+        sendD.onclick = function(){
+            $.ajax({
+                url:'/c/10',
+                type:'get',
+                success:function(data){
+                    if(data.success)
+                    {
+                        $("#msg").append(data.obj.name+' '+data.obj.age);
+                    }else{
+                        $("#msg").append(data.msg);
+                    }
+
+                   
+                }
+            })
+        }
+
+        sendPostGet.onclick = function(){
+            $.ajax({
+                url:'/b',
+                type:'post',
+                success:function(data){
+                    $("#msg").append(data);
+                }
+            })
+        }
+        sendPost.onclick = function(){
+            $.ajax({
+                url:'/a',
+                type:'post',
+                success:function(data){
+                    $("#msg").append(data);
+                }
+            })
+        }
+
+        sendGet.onclick = function(){
+            $.ajax({
+                url:'/a',//服务器端的a接口
+                type:'get',
+                success:function(data){
+                    // alert(data);
+                    if(data.success)
+                    {
+                        $("#msg").append("姓名:="+data.obj.name+"年龄:="+data.obj.age);
+                    }
+
+
+                    
+                }
+            })
+        }
+
+
+    </script>
+</body>
+</html>
